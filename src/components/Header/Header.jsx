@@ -76,16 +76,16 @@ function Header() {
           </button>
         </nav>
         {menushow && (
-            <ul className="bg-white sm:hidden text-center flex flex-col py-2 absolute top-22 right-0 w-screen">
+            <ul className="bg-white z-10 sm:hidden text-center flex flex-col pt-2 absolute top-22 right-0 w-screen">
               {navItems.map((item) =>
                 item.active ? (
-                  <li key={item.name} className="border-b-2">
+                  <li key={item.name} className="border-b-2 last:border-none">
                     <button
                       onClick={() => {
                         navigate(item.slug);
                         setMenushow(false);
                       }}
-                      className="inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
+                      className="inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
                     >
                       {item.name}
                     </button>
