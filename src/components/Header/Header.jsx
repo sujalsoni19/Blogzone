@@ -47,7 +47,7 @@ function Header() {
               <Logo />
             </Link>
           </div>
-          <ul className="hidden sm:flex ml-auto">
+          <ul className="hidden  sm:flex ml-auto">
             {navItems.map((item) =>
               item.active ? (
                 <li key={item.name}>
@@ -76,7 +76,7 @@ function Header() {
           </button>
         </nav>
         {menushow && (
-            <ul className="bg-white z-10 sm:hidden text-center flex flex-col pt-2 absolute top-22 right-0 w-screen">
+            <ul className="bg-white z-10 border-y sm:hidden text-center flex flex-col pt-2 absolute top-22 right-0 w-screen">
               {navItems.map((item) =>
                 item.active ? (
                   <li key={item.name} className="border-b-2 last:border-none">
