@@ -45,8 +45,8 @@ export default function Postform({ post }) {
         data.featuredImage = fileId;
         const dbPost = await appwriteService.createPost({
           ...data,
-          userId: userData.userData.$id,
-          Authorname: userData.userData.name,
+          userId: userData?.userData?.$id,
+          Authorname: userData?.userData?.name ?? "Anonymous",
         });
 
         if (dbPost) {
@@ -61,8 +61,9 @@ export default function Postform({ post }) {
       return value
         .trim()
         .toLowerCase()
-        .replace(/[^a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
+        .replace(/[^a-z0-9._-]+/g, "-")
+        .replace(/^-+/, "")
+        .slice(0, 36);
 
     return "";
   }, []);

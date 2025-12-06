@@ -6,62 +6,109 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
 export default function Post() {
-    const [post, setPost] = useState(null);
-    const { slug } = useParams();
-    const navigate = useNavigate();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showActions, setShowActions] = useState(false);
 
-    const userData = useSelector((state) => state.auth.userData);
+  const { slug } = useParams();
+  const navigate = useNavigate();
 
-    const isAuthor = post && userData ? post.userId === userData.userData.$id : false;
+  const userData = useSelector((state) => state.auth.userData);
 
-    useEffect(() => {
-        if (slug) {
-            appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
-            });
-        } else navigate("/");
-    }, [slug, navigate]);
+  const currentUserId = userData?.userData?.$id ?? userData?.$id ?? null;
+  const isAuthor =
+    post && currentUserId ? post.userId === currentUserId : false;
 
-    const deletePost = () => {
-        appwriteService.deletePost(post.$id).then((status) => {
-            if (status) {
-                appwriteService.deleteFile(post.featuredImage);
-                navigate("/");
-            }
-        });
-    };
+  useEffect(() => {
+    if (slug) {
+      setLoading(true);
+      appwriteService.getPost(slug).then((post) => {
+        if (post) setPost(post);
+        else navigate("/");
+        setLoading(false);
+      });
+    } else {
+      navigate("/");
+    }
+  }, [slug, navigate]);
 
-    return post ? (
-        <div className="py-8">
-            <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={appwriteService.getFilePreview(post.featuredImage)}
-                        alt={post.title}
-                        className="rounded-xl"
-                    />
+  const deletePost = () => {
+    if (!post) return;
+    const postId = post.$id ?? post.id;
+    if (!postId) return;
 
-                    {isAuthor && (
-                        <div className="absolute right-6 top-6">
-                            <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
-                                    Edit
-                                </Button>
-                            </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
-                                Delete
-                            </Button>
-                        </div>
-                    )}
-                </div>
-                <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
-                </div>
-                <div className="browser-css">
-                    {parse(post.content)}
-                    </div>
-            </Container>
+    appwriteService.deletePost(postId).then((status) => {
+      if (status) {
+        if (post.featuredImage) appwriteService.deleteFile(post.featuredImage);
+        navigate("/");
+      }
+    });
+  };
+  
+  if (loading) {
+    return (
+      <div className="min-h-105 flex items-center justify-center">
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-black rounded-full animate-bounce"></div>
+          <div className="w-3 h-3 bg-black rounded-full delay-150 animate-bounce"></div>
+          <div className="w-3 h-3 bg-black rounded-full delay-300 animate-bounce"></div>
         </div>
-    ) : null;
+      </div>
+    );
+  }
+
+  return post ? (
+    <div className="py-8">
+      <Container>
+        <div className="w-full flex justify-center mb-4">
+          <div className="relative border rounded-xl p-2 inline-block">
+            <img
+              src={appwriteService.getFilePreview(post.featuredImage)}
+              alt={post.title}
+              className="rounded-xl w-full max-w-[960px] h-auto object-contain"
+            />
+
+            {isAuthor && (
+              <div className="absolute top-2 right-2 sm:top-4 sm:right-4 flex items-center gap-2">
+
+                {showActions && (
+                  <>
+                    <Link to={`/edit-post/${post.$id ?? post.id}`}>
+                      <Button bgColor="bg-green-500">Edit</Button>
+                    </Link>
+
+                    <Button bgColor="bg-red-500" onClick={deletePost}>
+                      Delete
+                    </Button>
+                  </>
+                )}
+
+                <button
+                  className="text-black hover:cursor-pointer bg-white rounded-2xl text-2xl sm:text-4xl"
+                  onClick={() => setShowActions((prev) => !prev)}
+                >
+                  ⋮
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="border border-stone-500 rounded-xl">
+          <div className="w-[calc(100%-1.5rem)] mx-auto my-2 mb-6 flex flex-col gap-2">
+            <h1 className="w-full break-all text-base sm:text-2xl font-extrabold">
+              {post.title}
+            </h1>
+            <p className="text-xs sm:text-base">
+              by:{post.Authorname ?? "Anonymous"}
+            </p>
+          </div>
+
+          <div className="text-[10px] sm:text-sm mb-6 browser-css w-[calc(100%-1.5rem)] mx-auto">
+            {parse(post.content)}
+          </div>
+        </div>
+      </Container>
+    </div>
+  ) : null;
 }

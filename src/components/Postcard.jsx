@@ -15,7 +15,10 @@ function PostCard({ $id, title, featuredImage, userId, Authorname }) {
           className="rounded-xl w-[260px] h-[147px] object-contain"
         />
 
-        <div>{title}</div>
+        <div className="w-full px-2 text-center break-all overflow-hidden">
+  {title}
+</div>
+
 
         <div className="text-sm pr-2">
           by: {Authorname ? Authorname : "anonymous"}

@@ -76,7 +76,7 @@ function Home() {
                     </div>
                   ) : (
                     posts
-                      .filter((post) => post.userId === currentUser.$id)
+                      .filter((post) => post.userId === currentUser?.$id)
                       .map((post) => (
                         <div key={post.$id} className="w-full">
                           <Postcard {...post} />
