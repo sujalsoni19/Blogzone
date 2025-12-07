@@ -15,7 +15,7 @@ function PostCard({ $id, title, featuredImage, userId, Authorname }) {
           className="rounded-xl w-[260px] h-[147px] object-contain"
         />
 
-        <div className="w-full px-2 text-center break-all overflow-hidden">
+        <div className="w-full px-2 text-center break-word overflow-hidden">
   {title}
 </div>
 

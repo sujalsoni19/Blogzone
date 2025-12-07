@@ -45,8 +45,8 @@ export default function Postform({ post }) {
         data.featuredImage = fileId;
         const dbPost = await appwriteService.createPost({
           ...data,
-          userId: userData?.userData?.$id,
-          Authorname: userData?.userData?.name ?? "Anonymous",
+          userId: userData?.userData?.$id ?? userData?.$id,
+          Authorname: userData?.userData?.name ?? userData?.name ?? "Anonymous",
         });
 
         if (dbPost) {
