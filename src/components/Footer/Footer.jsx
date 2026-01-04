@@ -14,7 +14,7 @@ function Footer() {
                             </div>
                             <div>
                                 <p className="text-sm ">
-                                    &copy; Copyright 2025. All Rights Reserved by Blogzone.
+                                    &copy; Copyright {new Date().getFullYear()}. All Rights Reserved by Blogzone.
                                 </p>
                             </div>
                         </div>
