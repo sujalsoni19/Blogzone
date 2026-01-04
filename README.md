@@ -1,12 +1,43 @@
-# React + Vite
+#  Blogzone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BlogZone is a modern, full-stack blogging platform built with **React**, **Tailwind CSS**, **Redux**, and **Appwrite**.  
+It lets users create, edit, and delete blog posts with a clean UI and a scalable backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Features
 
-## Expanding the ESLint configuration
+  **Authentication**
+  - User signup & login via Appwrite
+  - Persistent sessions
+   
+  **Blog Management**
+  - Create, read, update, delete (CRUD) posts
+  - Rich text editor 
+  
+  **Home Content**
+  - Show posts by current user
+  - Show trending posts
+   
+  **UI/UX**
+  - Responsive layout using Tailwind CSS
+    
+  **Backend (BaaS)**
+  - Appwrite for authentication, database, and file storage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+##  Tech Stack
+
+**Frontend**
+- [React](https://react.dev/)
+- [React Redux](https://react-redux.js.org/)
+- [React Router](https://reactrouter.com/) 
+- [Tailwind CSS](https://tailwindcss.com/)
+
+**Backend / BaaS**
+- [Appwrite](https://appwrite.io/) (Auth, Database, Storage, Functions if any)
+
+**Tooling**
+- Node.js & npm 
+- Vite
